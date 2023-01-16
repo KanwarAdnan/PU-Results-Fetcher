@@ -1,0 +1,236 @@
+/* Code By Kanwar Adnan */
+
+/* Add some custom styles to the body */
+body {
+	background-color: #f5f5f5;
+}
+
+/* Add box-shadow to the navbar */
+.navbar {
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Increase font-weight and size of the navbar-brand */
+.navbar-brand {
+	font-weight: bold;
+	font-size: 1.5em;
+}
+
+/* Style the form-control inputs */
+.form-control {
+	border-radius: 0;
+	border: none;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Add box-shadow to form-control inputs on focus */
+.form-control:focus {
+	outline: none;
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Style the search button */
+.btn-outline-success {
+	border-radius: 0;
+	border: none;
+	background-color: #28a745;
+	color: white;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Add box-shadow to search button on hover */
+.btn-outline-success:hover {
+	background-color: #1e7e34;
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Add box-shadow to table */
+table {
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Style the table headings */
+th {
+	background-color: #6c757d;
+	color: white;
+}
+
+/* Style the table cells */
+td {
+	font-weight: bold;
+}
+
+/* Add margin-top to container */
+.container {
+	margin-top: 1rem;
+}
+
+/* Center the search form */
+form {
+	text-align: center;
+}
+
+/* Style the form-group */
+.form-group {
+	display: flex;
+	align-items: center;
+}
+
+/* Style the input field */
+input {
+	flex: 1;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 0;
+	border: none;
+	margin-right: 0.5rem;
+}
+
+input:focus {
+	outline: none;
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Style the search button */
+button {
+	border-radius: 0;
+	border: none;
+	background-color: #28a745;
+	color: white;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	margin-top: 0.1rem;
+	padding: 0.375rem 0.75rem;
+}
+
+/* Add box-shadow to search button on hover */
+button:hover {
+	background-color: #1e7e34;
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Make the website responsive /
+         @media (max-width: 768px) {
+         / Reduce font-size of navbar-brand on small screens */
+.navbar-brand {
+	font-size: 1.25em;
+}
+
+/* Reduce font-size of table and card on small screens */
+table,
+.card {
+	font-size: 0.9em;
+}
+
+/* Add margin-bottom to semester-result */
+.semester-result {
+	margin-bottom: 1rem;
+}
+
+/* Add box-shadow to the card */
+.card {
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Style the card-title */
+.card-title {
+	font-weight: bold;
+}
+
+/* Style the input-group */
+.input-group {
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+
+/* Style the form-group */
+.form-group {
+	align-items: center;
+}
+
+/* Style the form */
+form {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Add margin-left to the search button */
+button {
+	margin-left: 10px;
+}
+
+/* Make the header responsive /
+         @media (max-width: 992px) {
+         / Change flex direction of navbar-nav on small screens */
+.navbar-nav {
+	flex-direction: column;
+}
+
+/* Center the nav-link on small screens */
+.navbar-nav .nav-link {
+	text-align: center;
+}
+}
+
+/footer/ .footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: #6c757d;
+	color: white;
+	text-align: center;
+	padding: 1rem;
+	box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.parent {
+	max-width: 100%;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+.semester-result-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	/* 4 columns of equal width */
+	grid-gap: 1em;
+	/* space between grid items */
+}
+
+/* Add media queries for different screen sizes */
+@media (max-width: 768px) {
+
+	/* for screens smaller than 768px (typical mobile screen size) */
+	.semester-result-grid {
+		grid-template-columns: repeat(3, 1fr);
+		/* 2 columns of equal width */
+	}
+}
+
+@media (max-width: 480px) {
+
+	/* for screens smaller than 480px (small mobile screen size) */
+	.semester-result-grid {
+		grid-template-columns: 1fr;
+		/* 1 column of full width */
+	}
+}
+
+.container {
+	margin-bottom: 0em !important;
+	/* remove the bottom margin */
+}
+
+#footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+.main-container {
+	position: relative;
+}
+
+#results-area {
+	padding: 0rem 0rem 5rem 0rem;
+}
