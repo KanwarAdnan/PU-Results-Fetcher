@@ -98,7 +98,7 @@ class UI {
             <p>Credit Hours: ${result.creditHours}</p>
             <p>CGPA: ${result.cgpa}</p>
             <p>Result: ${result.result}</p>
-
+            <p>GPA: ${result.gpa}</p>
           </div>
         </div>
       `;
