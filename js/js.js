@@ -38,6 +38,7 @@ class Student {
             creditHours: result.credit,
             cgpa: result.cgpa,
             result: result.result,
+            gpa: result.gpa,
             url: result.url
          }
       });
