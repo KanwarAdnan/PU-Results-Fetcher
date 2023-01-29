@@ -85,25 +85,36 @@ class UI {
     `;
    }
 
-   // createSemesterResultsDivs creates the divs displaying the semester results
    createSemesterResultsDivs(semesterResults) {
-      console.log(this.semesterResultsContainer);
       this.semesterResultsContainer.innerHTML = "";
+      this.semesterResultsContainer.innerHTML += `
+    <table class="table table-bordered" id="table-results2">
+      <thead>
+        <tr>
+          <th>Semester</th>
+          <th>Credit</th>
+          <th>CGPA</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+  `
+      const table = document.getElementById("table-results2");
       for (let i = 0; i < semesterResults.length; i++) {
          const result = semesterResults[i];
-         this.semesterResultsContainer.innerHTML += `
-        <div class="semester-result card">
-          <div class="card-body">
-            <h5 class="card-title">Semester ${result.semester}</h5>
-            <p>Credit Hours: ${result.creditHours}</p>
-            <p>CGPA: ${result.cgpa}</p>
-            <p>Result: ${result.result}</p>
-          </div>
-        </div>
-      `;
-         //            <p>URL: ${result.url}</p>
+         var row = table.insertRow(i + 1);
+         var cell0 = row.insertCell(0);
+         var cell1 = row.insertCell(1);
+         var cell2 = row.insertCell(2);
+         var cell3 = row.insertCell(3);
+         cell0.innerHTML = result.semester;
+         cell1.innerHTML = result.creditHours;
+         cell2.innerHTML = result.cgpa;
+         cell3.innerHTML = result.result;
       }
    }
+
+
    // hideResults hides the student data display
    hideResults() {
       document.getElementById("results-area").style.display = "none";
