@@ -120,6 +120,7 @@ class UI {
       document.getElementById("results-area").style.display = "none";
       document.getElementById("results").style.display = "none";
       document.getElementById("semester-results").style.display = "none";
+      document.getElementById("div_table").style.display = "none";
    }
 
    // hideResults shows the student data display
@@ -127,6 +128,7 @@ class UI {
       document.getElementById("results-area").style.display = "block";
       document.getElementById("results").style.display = "block";
       document.getElementById("semester-results").style.display = "block";
+      document.getElementById("div_table").style.display = "block";
    }
 
 }
@@ -144,11 +146,10 @@ function getResult() {
       .then(data => {
          const student = new Student(data);
          ui.makeTable(student);
-         console.log(student.semesterResults);
          ui.createSemesterResultsDivs(student.semesterResults);
          ui.showResults();
       })
       .catch(error => {
-         alert(`Error: ${error}`);
+         alert(`${error}`);
       });
 }
