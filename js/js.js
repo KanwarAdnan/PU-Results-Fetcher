@@ -154,16 +154,14 @@ function getResult() {
       });
 }
 
-const input = document.getElementById("roll_no");
+document.addEventListener("DOMContentLoaded", function() {
+  const input = document.getElementById("roll_no");
 
-// Bind function to Enter key press
-
-input.addEventListener("keydown", function(event) {
-
-  if (event.keyCode === 13) {
-
-    getResult();
-
-  }
-
+  // Bind function to Enter key press
+  input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      getResult();
+    }
+  });
 });
+
