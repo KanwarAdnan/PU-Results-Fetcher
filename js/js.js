@@ -154,7 +154,7 @@ function getResult() {
       });
 }
 
-const input = document.getElementById("myInput");
+const input = document.getElementById("roll_no");
 
 // Bind function to Enter key press
 
