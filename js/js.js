@@ -153,3 +153,17 @@ function getResult() {
          alert(`${error}`);
       });
 }
+
+const input = document.getElementById("myInput");
+
+// Bind function to Enter key press
+
+input.addEventListener("keydown", function(event) {
+
+  if (event.keyCode === 13) {
+
+    getResult();
+
+  }
+
+});
