@@ -119,7 +119,7 @@ class UI {
       <tbody>
   `
 		const table = document.getElementById("table-results2");
-		var compart_exists;
+		var compart_exists = false;
 		for (let i = 0; i < semesterResults.length; i++) {
 			var result = semesterResults[i];
 			var row = table.insertRow(i + 1);
@@ -133,9 +133,11 @@ class UI {
 			cell2.innerHTML = result.cgpa;
 			cell3.innerHTML = result.comparts;
 			cell4.innerHTML = result.status;
+             		if (result.comparts.length != 0) {
+                            compart_exists = true;
+                        }
 		}
-		if (result.comparts.length == 0) {
-			console.log(result.comparts.length == 0)
+		if (!compart_exists) {
 			this.hideEmptyCompartsRows();
 		}
 	}
