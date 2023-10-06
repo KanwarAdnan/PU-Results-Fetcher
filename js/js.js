@@ -163,7 +163,7 @@ class UI {
 // getResult is the event listener for the form submission
 function getResult() {
 	const rollNo = document.querySelector("#roll_no").value;
-	const studentAPI = new StudentAPI("https://pu_results_20-1-w0009924.deta.app/");
+	const studentAPI = new StudentAPI("https://api_last-1-j0851899.deta.app/");
 	const ui = new UI();
 
 	ui.hideResults();
