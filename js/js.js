@@ -21,12 +21,12 @@ class StudentAPI {
 // Student is a class that represents a student
 class Student {
 	constructor(data) {
-		this.name = data[0].name;
-		this.fatherName = data[0].father_name;
-		this.institute = data[0].institute;
-		this.degree = data[0].degree;
-		this.rollNo = data[0].roll_no;
-		this.regNo = data[0].reg_no;
+		this.name = data[ data.length - 1 ].name;
+		this.fatherName = data[ data.length - 1 ].father_name;
+		this.institute = data[ data.length - 1 ].institute;
+		this.degree = data[ data.length - 1 ].degree;
+		this.rollNo = data[ data.length - 1 ].roll_no;
+		this.regNo = data[ data.length - 1 ].reg_no;
 		this.semesterResults = this.createSemesterResults(data);
 	}
 
@@ -37,6 +37,7 @@ class Student {
 				semester: result.semester,
 				creditHours: result.credit,
 				cgpa: result.cgpa,
+				gpa: result.gpa, // Add GPA if available
 				comparts: result.comparts,
 				status: result.status,
 				url: result.url
@@ -89,7 +90,7 @@ class UI {
 
 	hideEmptyCompartsRows() {
 		const compartHeader = document.querySelector(".comparts-header");
-		const compartRows = document.querySelectorAll("td:nth-child(4)");
+		const compartRows = document.querySelectorAll("td:nth-child(5)");
 
 		if (compartHeader) {
 			compartHeader.style.display = "none";
@@ -102,45 +103,80 @@ class UI {
 		});
 	}
 
+	hideGpaRows() {
+		const gpaHeader = document.querySelector(".gpa-header");
+		const gpaRows = document.querySelectorAll("td:nth-child(4)");
+
+		if (gpaHeader) {
+			gpaHeader.style.display = "none";
+		}
+
+		gpaRows.forEach((row) => {
+			const tableRow = row;
+			const tableBody = tableRow.parentElement;
+			tableBody.removeChild(tableRow);
+		});
+	}
+
 
 	createSemesterResultsDivs(semesterResults) {
 		this.semesterResultsContainer.innerHTML = "";
 		this.semesterResultsContainer.innerHTML += `
-    <table class="table table-bordered" id="table-results2">
-      <thead>
-        <tr>
-          <th>Semester</th>
-          <th>Credit</th>
-          <th>CGPA</th>
-          <th class="comparts-header">Comparts</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-  `
+		<table class="table table-bordered" id="table-results2">
+		  <thead>
+			<tr>
+			  <th>Semester</th>
+			  <th>Credit</th>
+			  <th>CGPA</th>
+			  <th class="gpa-header>GPA</th>
+			  <th class="comparts-header">Comparts</th>
+			  <th>Status</th>
+			</tr>
+		  </thead>
+		  <tbody>
+		`;
+		
 		const table = document.getElementById("table-results2");
-		var compart_exists = false;
+		let compart_exists = false;
+		let gpa_exists = false;
+		
 		for (let i = 0; i < semesterResults.length; i++) {
-			var result = semesterResults[i];
-			var row = table.insertRow(i + 1);
-			var cell0 = row.insertCell(0);
-			var cell1 = row.insertCell(1);
-			var cell2 = row.insertCell(2);
-			var cell3 = row.insertCell(3);
-			var cell4 = row.insertCell(4);
+			const result = semesterResults[i];
+			const row = table.insertRow(i + 1);
+			const cell0 = row.insertCell(0);
+			const cell1 = row.insertCell(1);
+			const cell2 = row.insertCell(2);
+			const cell3 = row.insertCell(3);
+			const cell4 = row.insertCell(4);
+			const cell5 = row.insertCell(5);
+			
 			cell0.innerHTML = result.semester;
 			cell1.innerHTML = result.creditHours;
 			cell2.innerHTML = result.cgpa;
-			cell3.innerHTML = result.comparts;
-			cell4.innerHTML = result.status;
-             		if (result.comparts.length != 0) {
-                            compart_exists = true;
-                        }
+			cell3.innerHTML = result.gpa; // Display GPA if available, or an empty string
+			cell4.innerHTML = result.comparts;
+			cell5.innerHTML = result.status;
+			
+			if (result.comparts.length !== 0) {
+				compart_exists = true;
+			}
+			if (result.gpa) {
+				gpa_exists = true;
+			}
+
 		}
+		
 		if (!compart_exists) {
 			this.hideEmptyCompartsRows();
 		}
+
+		if (!gpa_exists) {
+			this.hideGpaRows();
+		}
+
+
 	}
+	
 
 	// hideResults hides the student data display
 	hideResults() {
