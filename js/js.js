@@ -128,7 +128,7 @@ class UI {
 			  <th>Semester</th>
 			  <th>Credit</th>
 			  <th>CGPA</th>
-			  <th class="gpa-header>GPA</th>
+			  <th class="gpa-header">GPA</th>
 			  <th class="comparts-header">Comparts</th>
 			  <th>Status</th>
 			</tr>
@@ -166,12 +166,13 @@ class UI {
 
 		}
 		
-		if (!compart_exists) {
-			this.hideEmptyCompartsRows();
-		}
 
 		if (!gpa_exists) {
 			this.hideGpaRows();
+		}
+
+		if (!compart_exists) {
+			this.hideEmptyCompartsRows();
 		}
 
 
