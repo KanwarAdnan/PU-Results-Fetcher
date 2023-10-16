@@ -2,8 +2,10 @@
 
 /* Add some custom styles to the body */
 body {
-	background-color: #f5f5f5;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
 }
+
 
 /* Add box-shadow to the navbar */
 .navbar {
@@ -16,18 +18,16 @@ body {
 	font-size: 1.5em;
 }
 
-/* Style the form-control inputs */
 .form-control {
-	border-radius: 0;
-	border: none;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-/* Add box-shadow to form-control inputs on focus */
 .form-control:focus {
-	outline: none;
-	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
+
 
 /* Style the search button */
 .btn-outline-success {
@@ -51,7 +51,7 @@ table {
 
 /* Style the table headings */
 th {
-	background-color: #6c757d;
+	background-color: #25525E;
 	color: white;
 }
 
@@ -176,12 +176,19 @@ button {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	background-color: #6c757d;
+	background-color: #f25525E;
 	color: white;
 	text-align: center;
 	padding: 1rem;
 	box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25);
 }
+
+/* Override Bootstrap styles for the footer */
+footer.bg-dark {
+    background-color: #25525E !important;
+    color: white; 
+}
+
 
 .parent {
 	max-width: 100%;
