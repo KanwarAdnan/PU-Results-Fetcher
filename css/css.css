@@ -234,10 +234,54 @@ footer.bg-dark {
 	width: 100%;
 }
 
-.main-container {
+/.main-container {
 	position: relative;
 }
 
 #results-area {
 	padding: 0rem 0rem 5rem 0rem;
+}
+
+/* */
+tr {
+    border-bottom: 2px solid #25525E; 
+}
+
+/* Style the borders of the table cells in the semester-result-grid */
+.semester-result-grid td {
+    border: 2px solid #25525E; 
+}
+
+/* Style the borders of the table cells in the semester-result-grid */
+.semester-result-grid th {
+    border: 2px solid #203e46; 
+}
+
+/* Style the borders of the table cells in the semester-result-grid */
+.semester-result-grid tr {
+    border: 2px solid #203e46; 
+}
+
+.semester-result-grid td {
+    text-align: center; 
+    padding: 10px;
+}
+
+
+/* Additional styles for borders in the table */
+tr {
+    border-top: 2px solid #25525E; 
+    border-bottom: 2px solid #25525E; 
+    border-left: 2px solid #25525E;
+    border-right: 2px solid #25525E; 
+
+}
+
+/* Additional styles for borders in the table */
+.semester-result-grid tr {
+    border-bottom: 2px solid #25525E; /* Add bottom border */
+}
+
+.semester-result-grid th {
+    border-top: 2px solid #25525E; /* Add top border for table header */
 }
