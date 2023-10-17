@@ -283,3 +283,16 @@ nav .navbar-brand {
 .bg-light {
     background-color: #25525E !important;
 }
+
+#loading {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+  margin-top: calc((50px - 2rem) / 2);
+}

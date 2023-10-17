@@ -197,25 +197,33 @@ class UI {
 
 }
 
-// getResult is the event listener for the form submission
 function getResult() {
-	const rollNo = document.querySelector("#roll_no").value;
-	const studentAPI = new StudentAPI("https://api_last-1-j0851899.deta.app/");
-	const ui = new UI();
+    // Display loading
+    document.getElementById('loading').style.display = 'flex';
 
-	ui.hideResults();
+    const rollNo = document.querySelector("#roll_no").value;
+    const studentAPI = new StudentAPI("https://api_last-1-j0851899.deta.app/");
+    const ui = new UI();
 
-	studentAPI
-		.getStudentData(rollNo)
-		.then(data => {
-			const student = new Student(data);
-			ui.makeTable(student);
-			ui.createSemesterResultsDivs(student.semesterResults);
-			ui.showResults();
-		})
-		.catch(error => {
-			alert(`${error}`);
-		});
+    ui.hideResults();
+
+    studentAPI
+        .getStudentData(rollNo)
+        .then(data => {
+            const student = new Student(data);
+            ui.makeTable(student);
+            ui.createSemesterResultsDivs(student.semesterResults);
+            ui.showResults();
+
+            // Hide loading inside the .then() block
+            document.getElementById('loading').style.display = 'none';
+        })
+        .catch(error => {
+            alert(`${error}`);
+
+            // Ensure loading is hidden even if there's an error
+            document.getElementById('loading').style.display = 'none';
+        });
 }
 
 document.addEventListener("DOMContentLoaded", function() {
