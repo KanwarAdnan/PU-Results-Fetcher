@@ -242,7 +242,6 @@ footer.bg-dark {
 	padding: 0rem 0rem 5rem 0rem;
 }
 
-/* */
 tr {
     border-bottom: 2px solid #25525E; 
 }
@@ -262,6 +261,10 @@ tr {
     padding: 10px;
 }
 
+.semester-result-grid th {
+    text-align: center; 
+    padding: 10px;
+}
 
 /* Additional styles for borders in the table */
 tr {
@@ -270,4 +273,13 @@ tr {
     border-left: 2px solid #25525E;
     border-right: 2px solid #25525E; 
 
+}
+
+/* Change the color of the nav bar text using a more specific selector */
+nav .navbar-brand {
+    color: white !important; /* You can replace 'red' with any other color */
+}
+
+.bg-light {
+    background-color: #25525E !important;
 }
