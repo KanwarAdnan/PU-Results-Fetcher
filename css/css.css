@@ -254,12 +254,7 @@ tr {
 
 /* Style the borders of the table cells in the semester-result-grid */
 .semester-result-grid th {
-    border: 2px solid #203e46; 
-}
-
-/* Style the borders of the table cells in the semester-result-grid */
-.semester-result-grid tr {
-    border: 2px solid #203e46; 
+    border: 2px solid #25525E; 
 }
 
 .semester-result-grid td {
@@ -275,13 +270,4 @@ tr {
     border-left: 2px solid #25525E;
     border-right: 2px solid #25525E; 
 
-}
-
-/* Additional styles for borders in the table */
-.semester-result-grid tr {
-    border-bottom: 2px solid #25525E; /* Add bottom border */
-}
-
-.semester-result-grid th {
-    border-top: 2px solid #25525E; /* Add top border for table header */
 }
