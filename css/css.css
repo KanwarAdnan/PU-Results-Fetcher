@@ -296,3 +296,8 @@ nav .navbar-brand {
   height: 2rem;
   margin-top: calc((50px - 2rem) / 2);
 }
+
+#chart-container {
+    margin: 6rem; /* Adjust this value according to your design */
+}
+

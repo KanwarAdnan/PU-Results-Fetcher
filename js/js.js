@@ -1,12 +1,8 @@
-// Code By Kanwar Adnan
-
-// StudentAPI is a class that handles the fetching of student data from the API
 class StudentAPI {
 	constructor(baseUrl) {
 		this.baseUrl = baseUrl;
 	}
 
-	// getStudentData makes the API call and returns a promise with the student data
 	async getStudentData(rollNo) {
 		try {
 			const response = await fetch(`${this.baseUrl}${rollNo}`);
@@ -18,42 +14,38 @@ class StudentAPI {
 	}
 }
 
-// Student is a class that represents a student
 class Student {
 	constructor(data) {
-		this.name = data[ data.length - 1 ].name;
-		this.fatherName = data[ data.length - 1 ].father_name;
-		this.institute = data[ data.length - 1 ].institute;
-		this.degree = data[ data.length - 1 ].degree;
-		this.rollNo = data[ data.length - 1 ].roll_no;
-		this.regNo = data[ data.length - 1 ].reg_no;
+		this.name = data[data.length - 1].name;
+		this.fatherName = data[data.length - 1].father_name;
+		this.institute = data[data.length - 1].institute;
+		this.degree = data[data.length - 1].degree;
+		this.rollNo = data[data.length - 1].roll_no;
+		this.regNo = data[data.length - 1].reg_no;
 		this.semesterResults = this.createSemesterResults(data);
 	}
 
-	// createSemesterResults maps the data to an array of semester results
 	createSemesterResults(data) {
 		return data.map(result => {
 			return {
 				semester: result.semester,
 				creditHours: result.credit,
 				cgpa: result.cgpa,
-				gpa: result.gpa, // Add GPA if available
+				gpa: result.gpa || 0,
 				comparts: result.comparts,
 				status: result.status,
 				url: result.url
-			}
+			};
 		});
 	}
 }
 
-// UI is a class that handles the display of student data
 class UI {
 	constructor() {
 		this.table = document.getElementById("div_table");
 		this.semesterResultsContainer = document.getElementById("semester-results");
 	}
 
-	// makeTable creates the table displaying the student information
 	makeTable(student) {
 		this.table.innerHTML = `
       <table class="table table-bordered" id="table-results">
@@ -87,7 +79,6 @@ class UI {
     `;
 	}
 
-
 	hideEmptyCompartsRows() {
 		const compartHeader = document.querySelector(".comparts-header");
 		const compartRows = document.querySelectorAll("td:nth-child(5)");
@@ -118,7 +109,6 @@ class UI {
 		});
 	}
 
-
 	createSemesterResultsDivs(semesterResults) {
 		this.semesterResultsContainer.innerHTML = "";
 		this.semesterResultsContainer.innerHTML += `
@@ -135,11 +125,11 @@ class UI {
 		  </thead>
 		  <tbody>
 		`;
-		
+
 		const table = document.getElementById("table-results2");
 		let compart_exists = false;
 		let gpa_exists = false;
-		
+
 		for (let i = 0; i < semesterResults.length; i++) {
 			const result = semesterResults[i];
 			const row = table.insertRow(i + 1);
@@ -149,23 +139,21 @@ class UI {
 			const cell3 = row.insertCell(3);
 			const cell4 = row.insertCell(4);
 			const cell5 = row.insertCell(5);
-			
+
 			cell0.innerHTML = result.semester;
 			cell1.innerHTML = result.creditHours;
 			cell2.innerHTML = result.cgpa;
-			cell3.innerHTML = result.gpa; // Display GPA if available, or an empty string
+			cell3.innerHTML = result.gpa;
 			cell4.innerHTML = result.comparts;
 			cell5.innerHTML = result.status;
-			
+
 			if (result.comparts.length !== 0) {
 				compart_exists = true;
 			}
 			if (result.gpa) {
 				gpa_exists = true;
 			}
-
 		}
-		
 
 		if (!gpa_exists) {
 			this.hideGpaRows();
@@ -174,12 +162,8 @@ class UI {
 		if (!compart_exists) {
 			this.hideEmptyCompartsRows();
 		}
-
-
 	}
-	
 
-	// hideResults hides the student data display
 	hideResults() {
 		document.getElementById("results-area").style.display = "none";
 		document.getElementById("results").style.display = "none";
@@ -187,50 +171,115 @@ class UI {
 		document.getElementById("div_table").style.display = "none";
 	}
 
-	// hideResults shows the student data display
 	showResults() {
 		document.getElementById("results-area").style.display = "block";
 		document.getElementById("results").style.display = "block";
 		document.getElementById("semester-results").style.display = "block";
 		document.getElementById("div_table").style.display = "block";
 	}
+}
 
+function displayVisualization(data) {
+	if (!Array.isArray(data) || data.length === 0 || data.length === 1) {
+		console.error('Invalid data format for visualization.');
+		return;
+	}
+
+	const semesterResults = data;
+	const semesters = semesterResults.map(result => result.semester);
+	const cgpaValues = semesterResults.map(result => result.cgpa);
+	const gpaValues = semesterResults.map(result => result.gpa || 0);
+
+	if (semesters.length === 0 || cgpaValues.length === 0) {
+		console.error('No data available for visualization.');
+		return;
+	}
+
+	const cgpaTrace = {
+		x: semesters,
+		y: cgpaValues,
+		type: 'line',
+		mode: 'lines+markers',
+		marker: { color: '#25525E' },
+		name: 'CGPA'
+	};
+
+	const chartData = [cgpaTrace];
+
+	if (gpaValues.some(value => value !== 0)) {
+		const gpaTrace = {
+			x: semesters,
+			y: gpaValues,
+			type: 'line',
+			mode: 'lines+markers',
+			marker: { color: 'orange' },
+			name: 'GPA'
+		};
+		chartData.push(gpaTrace);
+	} else {
+		chartData[0].text = "CGPA";
+	}
+
+	const layout = {
+		title: 'Student Performance Across Semesters',
+		xaxis: {
+			title: 'Semester',
+			tickmode: 'array',
+			tickvals: semesters,
+			ticktext: semesters.map(String),
+		},
+		yaxis: { title: 'Score' },
+		autosize: true,
+	};
+
+	const config = {
+		displayModeBar: false,
+		staticPlot: false,
+		responsive: true,
+	};
+
+	Plotly.newPlot('chart-container', chartData, layout, config);
 }
 
 function getResult() {
-    // Display loading
-    document.getElementById('loading').style.display = 'flex';
+	// Display loading
+	document.getElementById('loading').style.display = 'flex';
 
-    const rollNo = document.querySelector("#roll_no").value;
-    const studentAPI = new StudentAPI("https://api_last-1-j0851899.deta.app/");
-    const ui = new UI();
+	const rollNo = document.querySelector("#roll_no").value;
+	const studentAPI = new StudentAPI("https://api_last-1-j0851899.deta.app/");
+	const ui = new UI();
 
-    ui.hideResults();
+	ui.hideResults();
 
-    studentAPI
-        .getStudentData(rollNo)
-        .then(data => {
-            const student = new Student(data);
-            ui.makeTable(student);
-            ui.createSemesterResultsDivs(student.semesterResults);
-            ui.showResults();
+	// Clear the existing chart
+	document.getElementById('chart-container').innerHTML = '';
 
-            // Hide loading inside the .then() block
-            document.getElementById('loading').style.display = 'none';
-        })
-        .catch(error => {
-            alert(`${error}`);
+	studentAPI
+		.getStudentData(rollNo)
+		.then(data => {
+			const student = new Student(data);
+			ui.makeTable(student);
+			ui.createSemesterResultsDivs(student.semesterResults);
+			ui.showResults();
 
-            // Ensure loading is hidden even if there's an error
-            document.getElementById('loading').style.display = 'none';
-        });
+			// Display visualization
+			displayVisualization(data);
+
+			// Hide loading inside the .then() block
+			document.getElementById('loading').style.display = 'none';
+		})
+		.catch(error => {
+			alert(`${error}`);
+
+			// Ensure loading is hidden even if there's an error
+			document.getElementById('loading').style.display = 'none';
+		});
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 	const input = document.getElementById("roll_no");
 
-	// Bind function to Enter key press
-	input.addEventListener("keydown", function(event) {
+	input.addEventListener("keydown", function (event) {
 		if (event.key === "Enter") {
 			getResult();
 		}
