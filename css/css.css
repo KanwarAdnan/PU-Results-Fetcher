@@ -300,4 +300,9 @@ nav .navbar-brand {
 #chart-container {
     margin: 6rem; /* Adjust this value according to your design */
 }
-
+/* Make chart-container responsive */
+@media (max-width: 768px) {
+    #chart-container {
+        margin: 2rem; /* Adjust this value for responsiveness on smaller screens */
+    }
+}
