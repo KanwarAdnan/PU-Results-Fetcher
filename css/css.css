@@ -306,3 +306,10 @@ nav .navbar-brand {
         margin: 2rem; /* Adjust this value for responsiveness on smaller screens */
     }
 }
+
+/* Center the #links-area div within the footer */
+#footer #links-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
