@@ -11,6 +11,19 @@
     <script src="js/js.js"></script>
     <link href="css/css.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script>
+
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/js/service-worker.js')
+            .then((registration) => {
+              console.log('Yes Service Worker registered with scope:', registration.scope);
+            })
+            .catch((error) => {
+              console.error('Service Worker registration failed:', error);
+            });
+        }
+        
+    </script>    
 </head>
 <body>
     <div class='header'>
