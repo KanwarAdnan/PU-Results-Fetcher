@@ -1,20 +1,8 @@
+// Code By Kanwar Adnan
+
 class StudentAPI {
 	constructor(baseUrl) {
 		this.baseUrl = baseUrl;
-		this.cacheVersionKey = 'apiCacheVersion';
-		this.currentApiVersion = 2;
-		this.initializeCache();
-	}
-
-	initializeCache() {
-		// Check and update cache version
-		const cachedVersion = localStorage.getItem(this.cacheVersionKey);
-
-		if (cachedVersion === null || parseInt(cachedVersion, 10) < this.currentApiVersion) {
-			console.log('Clearing old cache...');
-			this.clearCache();
-			localStorage.setItem(this.cacheVersionKey, this.currentApiVersion);
-		}
 	}
 
 	async getStudentData(rollNo) {
@@ -39,8 +27,9 @@ class StudentAPI {
 			const parsedData = JSON.parse(cachedData);
 
 			if (navigator.onLine) {
-				this.updateDataFromApi(rollNo).then(updatedData => {
-				});
+				//this.updateDataFromApi(rollNo).then(updatedData => {
+					// You can optionally perform actions with the updated data
+				//});
 			}
 
 			return parsedData.results;
@@ -48,6 +37,7 @@ class StudentAPI {
 			throw new Error(`Error fetching student data for rollNo ${rollNo}: ${error}`);
 		}
 	}
+
 
 	async updateDataFromApi(rollNo) {
 		try {
@@ -61,14 +51,6 @@ class StudentAPI {
 		} catch (error) {
 			throw new Error(`Error updating data from API for rollNo ${rollNo}: ${error}`);
 		}
-	}
-
-	clearCache() {
-		// Clear all cached data
-		Object.keys(localStorage)
-			.filter(key => key.startsWith('cached'))
-			.forEach(key => localStorage.removeItem(key));
-		console.log('Cache cleared.');
 	}
 }
 
@@ -311,7 +293,7 @@ function getResult() {
 
 	if (rollNo.toLowerCase() === 'clear') {
 		document.getElementById('loading').style.display = 'none';
-		studentAPI.clearCache();
+		clearCache();
 		console.log('Cache cleared.');
 		const input = document.getElementById("roll_no");
 		input.value = '';
@@ -345,6 +327,10 @@ function getResult() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+	const cacheVersionKey = 'apiCacheVersion';
+	const currentApiVersion = 5;
+	initializeCache(cacheVersionKey , currentApiVersion);
+	
 	const input = document.getElementById("roll_no");
 	input.focus();
 	
@@ -354,3 +340,18 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	});
 });
+
+function initializeCache(cacheVersionKey , currentApiVersion) {
+	const cachedVersion = localStorage.getItem(cacheVersionKey);
+
+	if (cachedVersion === null || parseInt(cachedVersion, 10) < currentApiVersion) {
+		clearCache();
+		localStorage.setItem(cacheVersionKey, currentApiVersion);
+	}
+}
+
+function clearCache() {
+	Object.keys(localStorage)
+		.filter(key => key.startsWith('cached'))
+		.forEach(key => localStorage.removeItem(key));
+}
