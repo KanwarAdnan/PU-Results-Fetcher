@@ -1,16 +1,74 @@
 class StudentAPI {
 	constructor(baseUrl) {
 		this.baseUrl = baseUrl;
+		this.cacheVersionKey = 'apiCacheVersion';
+		this.currentApiVersion = 2;
+		this.initializeCache();
+	}
+
+	initializeCache() {
+		// Check and update cache version
+		const cachedVersion = localStorage.getItem(this.cacheVersionKey);
+
+		if (cachedVersion === null || parseInt(cachedVersion, 10) < this.currentApiVersion) {
+			console.log('Clearing old cache...');
+			this.clearCache();
+			localStorage.setItem(this.cacheVersionKey, this.currentApiVersion);
+		}
 	}
 
 	async getStudentData(rollNo) {
 		try {
+			const cachedData = localStorage.getItem(`cachedData_${rollNo}`);
+			const cachedTimestamp = localStorage.getItem(`cachedTimestamp_${rollNo}`);
+
+			// If there is no data in the cache or the cached data has expired
+			if (!cachedData || (cachedTimestamp && Date.now() - parseInt(cachedTimestamp, 10) > 5 * 30 * 24 * 60 * 60 * 1000)) {
+				if (!navigator.onLine) {
+					return null;
+				}
+
+				// Fetch data from the API
+				const data = await this.updateDataFromApi(rollNo);
+
+				// Return the API response data
+				return data.results;
+			}
+
+			// If data is present in the cache and not expired, parse and return it
+			const parsedData = JSON.parse(cachedData);
+
+			if (navigator.onLine) {
+				this.updateDataFromApi(rollNo).then(updatedData => {
+				});
+			}
+
+			return parsedData.results;
+		} catch (error) {
+			throw new Error(`Error fetching student data for rollNo ${rollNo}: ${error}`);
+		}
+	}
+
+	async updateDataFromApi(rollNo) {
+		try {
 			const response = await fetch(`${this.baseUrl}${rollNo}`);
 			const data = await response.json();
-			return data.results;
+
+
+			localStorage.setItem(`cachedData_${rollNo}`, JSON.stringify(data));
+			localStorage.setItem(`cachedTimestamp_${rollNo}`, Date.now().toString());
+			return data;
 		} catch (error) {
-			throw new Error(`Error fetching student data: ${error}`);
+			throw new Error(`Error updating data from API for rollNo ${rollNo}: ${error}`);
 		}
+	}
+
+	clearCache() {
+		// Clear all cached data
+		Object.keys(localStorage)
+			.filter(key => key.startsWith('cached'))
+			.forEach(key => localStorage.removeItem(key));
+		console.log('Cache cleared.');
 	}
 }
 
@@ -247,9 +305,19 @@ function getResult() {
 
 	const rollNo = document.querySelector("#roll_no").value;
 	const studentAPI = new StudentAPI("https://api_last-1-j0851899.deta.app/");
-	const ui = new UI();
 
+	const ui = new UI();
 	ui.hideResults();
+
+	if (rollNo.toLowerCase() === 'clear') {
+		document.getElementById('loading').style.display = 'none';
+		studentAPI.clearCache();
+		console.log('Cache cleared.');
+		const input = document.getElementById("roll_no");
+		input.value = '';
+		input.focus();
+		return;
+	}
 
 	// Clear the existing chart
 	document.getElementById('chart-container').innerHTML = '';
@@ -278,7 +346,8 @@ function getResult() {
 
 document.addEventListener("DOMContentLoaded", function () {
 	const input = document.getElementById("roll_no");
-
+	input.focus();
+	
 	input.addEventListener("keydown", function (event) {
 		if (event.key === "Enter") {
 			getResult();
