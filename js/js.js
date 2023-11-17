@@ -1,5 +1,3 @@
-// Code By Kanwar Adnan
-
 class StudentAPI {
 	constructor(baseUrl) {
 		this.baseUrl = baseUrl;
@@ -293,7 +291,7 @@ function getResult() {
 
 	if (rollNo.toLowerCase() === 'clear') {
 		document.getElementById('loading').style.display = 'none';
-		clearCache();
+		clearCacheRes();
 		console.log('Cache cleared.');
 		const input = document.getElementById("roll_no");
 		input.value = '';
@@ -328,7 +326,7 @@ function getResult() {
 
 document.addEventListener("DOMContentLoaded", function () {
 	const cacheVersionKey = 'apiCacheVersion';
-	const currentApiVersion = 5;
+	const currentApiVersion = 8;
 	initializeCache(cacheVersionKey , currentApiVersion);
 	
 	const input = document.getElementById("roll_no");
@@ -345,13 +343,15 @@ function initializeCache(cacheVersionKey , currentApiVersion) {
 	const cachedVersion = localStorage.getItem(cacheVersionKey);
 
 	if (cachedVersion === null || parseInt(cachedVersion, 10) < currentApiVersion) {
-		clearCache();
+		clearCacheRes();
 		localStorage.setItem(cacheVersionKey, currentApiVersion);
 	}
 }
 
-function clearCache() {
-	Object.keys(localStorage)
-		.filter(key => key.startsWith('cached'))
-		.forEach(key => localStorage.removeItem(key));
-}
+function clearCacheRes() {
+	const keysToRemove = Object.keys(localStorage).filter(key => key.startsWith('cachedData_') || key.startsWith('cachedTimestamp_'));
+	console.log('Keys to remove:', keysToRemove);
+  
+	keysToRemove.forEach(key => localStorage.removeItem(key));
+  }
+  
