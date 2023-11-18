@@ -52,17 +52,46 @@ class StudentAPI {
 	}
 }
 
+// class Student {
+// 	constructor(data) {
+// 		this.name = data[data.length - 1].name;
+// 		this.fatherName = data[data.length - 1].father_name;
+// 		this.institute = data[data.length - 1].institute;
+// 		this.degree = data[data.length - 1].degree;
+// 		this.rollNo = data[data.length - 1].roll_no;
+// 		this.regNo = data[data.length - 1].reg_no;
+// 		this.semesterResults = this.createSemesterResults(data);
+// 	}
+
+// 	createSemesterResults(data) {
+// 		return data.map(result => {
+// 			return {
+// 				semester: result.semester,
+// 				creditHours: result.credit,
+// 				cgpa: result.cgpa,
+// 				gpa: result.gpa || 0,
+// 				comparts: result.comparts,
+// 				status: result.status,
+// 				url: result.url
+// 			};
+// 		});
+// 	}
+// }
+
 class Student {
 	constructor(data) {
-		this.name = data[data.length - 1].name;
-		this.fatherName = data[data.length - 1].father_name;
-		this.institute = data[data.length - 1].institute;
-		this.degree = data[data.length - 1].degree;
-		this.rollNo = data[data.length - 1].roll_no;
-		this.regNo = data[data.length - 1].reg_no;
-		this.semesterResults = this.createSemesterResults(data);
+  
+	  const studentInfo = data.student_information;
+  
+	  this.name = studentInfo.student_name || 'N/A';
+	  this.fatherName = studentInfo.father_name || 'N/A';
+	  this.institute = studentInfo.institute || 'N/A';
+	  this.degree = studentInfo.degree || 'N/A';
+	  this.rollNo = studentInfo.roll_number || 'N/A';
+	  this.regNo = studentInfo.reg_no || 'N/A';
+	  this.semesterResults = this.createSemesterResults(data.results);
 	}
-
+  
 	createSemesterResults(data) {
 		return data.map(result => {
 			return {
@@ -77,6 +106,7 @@ class Student {
 		});
 	}
 }
+
 
 class UI {
 	constructor() {
@@ -305,13 +335,16 @@ function getResult() {
 	studentAPI
 		.getStudentData(rollNo)
 		.then(data => {
+			console.log(data, 'this is the response'); // Log the entire data object
+
 			const student = new Student(data);
+			console.log(student,'this is student');
 			ui.makeTable(student);
 			ui.createSemesterResultsDivs(student.semesterResults);
 			ui.showResults();
 
 			// Display visualization
-			displayVisualization(data);
+			displayVisualization(student.semesterResults);
 
 			// Hide loading inside the .then() block
 			document.getElementById('loading').style.display = 'none';
@@ -325,8 +358,8 @@ function getResult() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-	const cacheVersionKey = 'apiCacheVersion';
-	const currentApiVersion = 8;
+	const cacheVersionKey = 'kanwar_rs_apiCacheVersion';
+	const currentApiVersion = 1;
 	initializeCache(cacheVersionKey , currentApiVersion);
 	
 	const input = document.getElementById("roll_no");

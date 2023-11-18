@@ -170,18 +170,6 @@ button {
 .navbar-nav .nav-link {
 	text-align: center;
 }
-}
-
-/footer/ .footer {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	background-color: #f25525E;
-	color: white;
-	text-align: center;
-	padding: 1rem;
-	box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25);
-}
 
 /* Override Bootstrap styles for the footer */
 footer.bg-dark {
@@ -234,7 +222,7 @@ footer.bg-dark {
 	width: 100%;
 }
 
-/.main-container {
+.main-container {
 	position: relative;
 }
 
@@ -312,4 +300,8 @@ nav .navbar-brand {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.navbar-light .navbar-nav .nav-link {
+	color: #fff !important; /* Set the text color of the links to white */
 }
