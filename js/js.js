@@ -314,7 +314,9 @@ function getResult() {
 	document.getElementById('loading').style.display = 'flex';
 
 	const rollNo = document.querySelector("#roll_no").value;
-	const studentAPI = new StudentAPI("https://api_last-1-j0851899.deta.app/");
+	// OLD API
+	// https://api_last-1-j0851899.deta.app/
+	const studentAPI = new StudentAPI("https://kanwaradnanpusms-vvicnw7txq-uc.a.run.app/");
 
 	const ui = new UI();
 	ui.hideResults();
