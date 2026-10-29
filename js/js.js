@@ -316,7 +316,8 @@ function getResult() {
 	const rollNo = document.querySelector("#roll_no").value;
 	// OLD API
 	// https://kanwaradnanpusms-vvicnw7txq-uc.a.run.app/
-	const studentAPI = new StudentAPI("https://weaimonitor-production.up.railway.app/results/");
+	// https://weaimonitor-production.up.railway.app/results/
+	const studentAPI = new StudentAPI("https://v0quickpu.malahim.dev/results/");
 
 	const ui = new UI();
 	ui.hideResults();
